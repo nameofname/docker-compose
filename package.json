@@ -8,6 +8,7 @@
     "test": "jest test --verbose",
     "eslint": "eslint src/**/*.ts test/**/*.ts",
     "build": "tsc",
+    "dev": "tsc -w",
     "prepublishOnly": "tsc",
     "release": "yarn build && standard-version"
   },
