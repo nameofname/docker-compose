@@ -93,17 +93,16 @@ const execCompose = (command, args, options: IDockerComposeOptions = {}): Promis
     result.err += chunk.toString();
   });
 
+  process.stdin.pipe(childProc.stdin);
+
   childProc.on('exit', (exitCode): void => {
+    process.stdin.destroy();
     result.exitCode = exitCode;
     if (exitCode === 0) {
       resolve(result);
     } else {
       reject(result);
     }
-  });
-
-  process.stdin.on('readable', () => {
-    childProc.stdin.write(process.stdin.read());
   });
 
   if (options.log) {
