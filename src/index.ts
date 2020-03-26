@@ -102,6 +102,10 @@ const execCompose = (command, args, options: IDockerComposeOptions = {}): Promis
     }
   });
 
+  process.stdin.on('readable', () => {
+    childProc.stdin.write(process.stdin.read());
+  });
+
   if (options.log) {
     childProc.stdout.pipe(process.stdout);
     childProc.stderr.pipe(process.stderr);
